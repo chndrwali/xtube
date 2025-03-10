@@ -1,25 +1,26 @@
 'use client';
 
 import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { FlameIcon, HomeIcon, PlaySquareIcon } from 'lucide-react';
+import { HistoryIcon, ListVideoIcon, ThumbsUpIcon } from 'lucide-react';
 import Link from 'next/link';
 
 const items = [
   {
-    title: 'Beranda',
-    url: '/',
-    icon: HomeIcon,
-  },
-  {
-    title: 'Subscription',
-    url: '/feed/subscriptions',
-    icon: PlaySquareIcon,
+    title: 'Histori',
+    url: '/playlists/history',
+    icon: HistoryIcon,
     auth: true,
   },
   {
-    title: 'Trending',
-    url: '/feed/trending',
-    icon: FlameIcon,
+    title: 'Video yang disukai',
+    url: '/playlists/liked',
+    icon: ThumbsUpIcon,
+    auth: true,
+  },
+  {
+    title: 'Playlist',
+    url: '/playlists',
+    icon: ListVideoIcon,
   },
 ];
 
