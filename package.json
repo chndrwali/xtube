@@ -8,7 +8,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed:categories": "bun lib/seed-categories.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "6.10.3",
