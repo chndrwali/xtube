@@ -9,11 +9,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'm.media-amazon.com',
+        hostname: 'utfs.io',
       },
       {
         protocol: 'https',
-        hostname: 'ik.imagekit.io',
+        hostname: 'xh6vlx1ihu.ufs.sh',
         port: '',
       },
     ],
