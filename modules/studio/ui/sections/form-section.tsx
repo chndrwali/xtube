@@ -17,7 +17,7 @@ import { VideoPlayer } from '@/modules/videos/ui/components/video-player';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Form, FormControl, FormField, FormLabel, FormMessage, FormItem } from '@/components/ui/form';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { CopyCheckIcon, CopyIcon, Globe2Icon, ImagePlusIcon, LockIcon, MoreVerticalIcon, RotateCcwIcon, SparklesIcon, TrashIcon } from 'lucide-react';
+import { CopyCheckIcon, CopyIcon, Globe2Icon, ImagePlusIcon, Loader2Icon, LockIcon, MoreVerticalIcon, RotateCcwIcon, SparklesIcon, TrashIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { THUMBNAIL_FALLBACK } from '@/modules/videos/constant';
@@ -75,6 +75,33 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
       utils.studio.getMany.invalidate();
       utils.studio.getOne.invalidate({ id: videoId });
       toast.success('Thumbnail di pulihkan');
+    },
+    onError: () => {
+      toast.error('Ada sesuatu yang salah!');
+    },
+  });
+
+  const generateDescription = trpc.videos.generateDescription.useMutation({
+    onSuccess: () => {
+      toast.success('Pekerjaan latar belakang dimulai');
+    },
+    onError: () => {
+      toast.error('Ada sesuatu yang salah!');
+    },
+  });
+
+  const generateTitle = trpc.videos.generateTitle.useMutation({
+    onSuccess: () => {
+      toast.success('Pekerjaan latar belakang dimulai');
+    },
+    onError: () => {
+      toast.error('Ada sesuatu yang salah!');
+    },
+  });
+
+  const generateThumbnail = trpc.videos.generateThumbnail.useMutation({
+    onSuccess: () => {
+      toast.success('Pekerjaan latar belakang dimulai');
     },
     onError: () => {
       toast.error('Ada sesuatu yang salah!');
@@ -139,8 +166,12 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Judul
-                      {/* TODO: add AI */}
+                      <div className="flex items-center gap-x-2 ">
+                        Judul
+                        <Button size="icon" variant="outline" type="button" className="rounded-full size-6 [&_svg]:size-3" onClick={() => generateTitle.mutate({ id: videoId })} disabled={generateTitle.isPending}>
+                          {generateTitle.isPending ? <Loader2Icon className="animate-spin" /> : <SparklesIcon />}
+                        </Button>
+                      </div>
                     </FormLabel>
                     <FormControl>
                       <Input {...field} placeholder="Tambah judul untuk video Anda" />
@@ -155,8 +186,12 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Deskripsi
-                      {/* TODO: add AI */}
+                      <div className="flex items-center gap-x-2 ">
+                        Deskripsi
+                        <Button size="icon" variant="outline" type="button" className="rounded-full size-6 [&_svg]:size-3" onClick={() => generateDescription.mutate({ id: videoId })} disabled={generateDescription.isPending}>
+                          {generateDescription.isPending ? <Loader2Icon className="animate-spin" /> : <SparklesIcon />}
+                        </Button>
+                      </div>
                     </FormLabel>
                     <FormControl>
                       <Textarea {...field} value={field.value ?? ''} rows={10} className="resize-none pr-10" placeholder="Tambah deskripsi untuk video Anda" />
@@ -185,7 +220,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                               <ImagePlusIcon className="size-4 mr-1" />
                               Ganti
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => generateThumbnail.mutate({ id: videoId })}>
                               <SparklesIcon className="size-4 mr-1" />
                               AI-generate
                             </DropdownMenuItem>
