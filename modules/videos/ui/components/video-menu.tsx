@@ -2,6 +2,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { ListPlusIcon, MoreHorizontalIcon, ShareIcon, Trash2Icon } from 'lucide-react';
+import { APP_URL } from '@/lib/constant';
 
 interface VideoMenuProps {
   videoId: string;
@@ -11,7 +12,7 @@ interface VideoMenuProps {
 
 export const VideoMenu = ({ videoId, variant, onRemove }: VideoMenuProps) => {
   const onCopy = () => {
-    const fullUrl = `${process.env.VERCEL_URL || 'http://localhost:3000'}/videos/${videoId}`;
+    const fullUrl = `${APP_URL || 'http://localhost:3000'}/videos/${videoId}`;
     navigator.clipboard.writeText(fullUrl);
     toast.success('Tautan disalin ke papan klip');
   };

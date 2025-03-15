@@ -24,6 +24,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Form, FormControl, FormField, FormLabel, FormMessage, FormItem } from '@/components/ui/form';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { CopyCheckIcon, CopyIcon, Globe2Icon, ImagePlusIcon, Loader2Icon, LockIcon, MoreVerticalIcon, RotateCcwIcon, SparklesIcon, TrashIcon } from 'lucide-react';
+import { APP_URL } from '@/lib/constant';
 
 interface FormSectionProps {
   videoId: string;
@@ -175,7 +176,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
     update.mutate(data);
   };
 
-  const fullUrl = `${process.env.VERCEL_URL || 'http://localhost:3000'}/videos/${video.id}`;
+  const fullUrl = `${APP_URL || 'http://localhost:3000'}/videos/${video.id}`;
   const [isCopied, setIsCopied] = useState(false);
 
   const onCopy = async () => {
