@@ -16,7 +16,7 @@ export const VideoMenu = ({ videoId, variant, onRemove }: VideoMenuProps) => {
     toast.success('Tautan disalin ke papan klip');
   };
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant={variant} size="icon" className="rounded-full">
           <MoreHorizontalIcon />
