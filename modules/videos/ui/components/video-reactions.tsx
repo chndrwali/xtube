@@ -21,6 +21,7 @@ export const VideoReactions = ({ videoId, dislikes, likes, viewerReaction }: Vid
   const like = trpc.videoReactions.like.useMutation({
     onSuccess: () => {
       utils.videos.getOne.invalidate({ id: videoId });
+      utils.playlists.getLiked.invalidate();
     },
     onError: (error) => {
       toast.error('Ada sesuatu yang salah!');
@@ -32,6 +33,7 @@ export const VideoReactions = ({ videoId, dislikes, likes, viewerReaction }: Vid
   const dislike = trpc.videoReactions.dislike.useMutation({
     onSuccess: () => {
       utils.videos.getOne.invalidate({ id: videoId });
+      utils.playlists.getLiked.invalidate();
     },
     onError: (error) => {
       toast.error('Ada sesuatu yang salah!');
