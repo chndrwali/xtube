@@ -8,30 +8,30 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { ResponsiveModal } from '@/components/responsive-modal';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 
-interface ThumbnailGenerateModalProps {
-  videoId: string;
+interface PlaylistCreateModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
 const formSchema = z.object({
-  prompt: z.string().min(10),
+  name: z.string().min(1),
 });
 
-export const ThumbnailGenerateModal = ({ open, videoId, onOpenChange }: ThumbnailGenerateModalProps) => {
+export const PlaylistCreateModal = ({ open, onOpenChange }: PlaylistCreateModalProps) => {
   const utils = trpc.useUtils();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      prompt: '',
+      name: '',
     },
   });
 
-  const generateThumbnail = trpc.videos.generateThumbnail.useMutation({
+  const create = trpc.playlists.create.useMutation({
     onSuccess: () => {
-      toast.success('Pekerjaan latar belakang dimulai');
+      toast.success('Playlist dibuat');
       form.reset();
       onOpenChange(false);
     },
@@ -41,33 +41,30 @@ export const ThumbnailGenerateModal = ({ open, videoId, onOpenChange }: Thumbnai
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    generateThumbnail.mutate({
-      id: videoId,
-      prompt: values.prompt,
+    create.mutate({
+      name: values.name,
     });
   };
 
   return (
-    <ResponsiveModal title="Generate thumbnail" open={open} onOpenChange={onOpenChange}>
+    <ResponsiveModal title="Buat playlist" open={open} onOpenChange={onOpenChange}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <FormField
             control={form.control}
-            name="prompt"
+            name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Prompt</FormLabel>
+                <FormLabel>Nama</FormLabel>
                 <FormControl>
-                  <Textarea {...field} className="resize-none" cols={30} rows={5} />
+                  <Input {...field} placeholder="Contoh: Favorite saya" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <div className="flex justify-end">
-            <Button className="" type="submit">
-              Generate
-            </Button>
+            <Button type="submit">Buat</Button>
           </div>
         </form>
       </Form>
