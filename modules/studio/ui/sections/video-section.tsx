@@ -130,9 +130,9 @@ const VideoSectionSuspense = () => {
                       <div className="flex items-center">{snakeCaseToTitle(video.muxStatus || 'error')}</div>
                     </TableCell>
                     <TableCell className="text-sm truncate">{format(new Date(video.createdAt), 'd MMM yyyy')}</TableCell>
-                    <TableCell className="text-right text-sm">Tayangan</TableCell>
-                    <TableCell className="text-right text-sm">Komentar</TableCell>
-                    <TableCell className="text-right text-sm pr-6">Suka</TableCell>
+                    <TableCell className="text-right text-sm">{video.viewCount} </TableCell>
+                    <TableCell className="text-right text-sm">{video.commentCount} </TableCell>
+                    <TableCell className="text-right text-sm pr-6">{video.likeCount} </TableCell>
                   </TableRow>
                 </Link>
               ))}
