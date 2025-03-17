@@ -4,7 +4,6 @@ import { toast } from 'sonner';
 import { trpc } from '@/trpc/client';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { ResponsiveModal } from '@/components/responsive-modal';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
