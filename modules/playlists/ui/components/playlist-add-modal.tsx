@@ -33,11 +33,12 @@ export const PlaylistAddModal = ({ open, onOpenChange, videoId }: PlaylistAddMod
   );
 
   const addVideo = trpc.playlists.addVideo.useMutation({
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast.success(`video di tambahkan ke playlist`);
       utils.playlists.getMany.invalidate();
       utils.playlists.getManyForVideo.invalidate({ videoId });
-      // TODO: invalidate getOne
+      utils.playlists.getOne.invalidate({ id: data.playlistId });
+      utils.playlists.getVideos.invalidate({ playlistId: data.playlistId });
     },
     onError: () => {
       toast.error('ada yang salah');
@@ -49,9 +50,10 @@ export const PlaylistAddModal = ({ open, onOpenChange, videoId }: PlaylistAddMod
       toast.success(`video di hapus dari playlist`);
       utils.playlists.getMany.invalidate();
       utils.playlists.getManyForVideo.invalidate({ videoId });
-      // TODO: invalidate getOne
+      utils.playlists.getOne.invalidate({ id: data.playlistId });
+      utils.playlists.getVideos.invalidate({ playlistId: data.playlistId });
     },
-    onError: (error) => {
+    onError: () => {
       toast.error('ada yang salah');
     },
   });
